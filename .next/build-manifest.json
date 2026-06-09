@@ -5,8 +5,8 @@
   "devFiles": [],
   "ampDevFiles": [],
   "lowPriorityFiles": [
-    "static/We9j6H-IEOD5MvuyvCWsL/_buildManifest.js",
-    "static/We9j6H-IEOD5MvuyvCWsL/_ssgManifest.js"
+    "static/jsHW34zi3_LgRM-U9KT1_/_buildManifest.js",
+    "static/jsHW34zi3_LgRM-U9KT1_/_ssgManifest.js"
   ],
   "rootMainFiles": [],
   "pages": {
@@ -37,7 +37,7 @@
       "static/chunks/framework-64ad27b21261a9ce.js",
       "static/chunks/main-1240964d40ce0f74.js",
       "static/chunks/617-95f4413ccdf3c0a6.js",
-      "static/chunks/pages/admin-c5fe352111b3550c.js"
+      "static/chunks/pages/admin-db60bc988d0a2598.js"
     ],
     "/movie/[slug]": [
       "static/chunks/webpack-d47306a7e99599a7.js",
