@@ -22,7 +22,7 @@ export default function AdminDashboard() {
       const movie: Movie = {
         ...formData as Movie,
         id: Date.now().toString(),
-        slug: formData.title?.toLowerCase().replace(/\s+/g, '-') || '',
+        slug: formData.title?.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '') || '',
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
       };
