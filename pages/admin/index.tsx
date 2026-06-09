@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Movie } from '@/types/movie';
-import { createMovieReview } from '@/utils/github';
+import { GitHubPublishError, createMovieReview } from '@/utils/github';
 
 export default function AdminDashboard() {
   const [formData, setFormData] = useState<Partial<Movie>>({
@@ -49,7 +49,15 @@ export default function AdminDashboard() {
       await createMovieReview(movie, token);
       setMessage('Review published. Site will rebuild automatically.');
     } catch (err) {
-      setMessage(err instanceof Error ? err.message : 'Error publishing. Check console.');
+      if (err instanceof GitHubPublishError && err.status === 401) {
+        localStorage.removeItem('adminGithubToken');
+        setGithubToken('');
+        setMessage('GitHub rejected this token. Create a fresh token with Contents read/write permission, paste it here, and publish again.');
+      } else if (err instanceof GitHubPublishError && err.status === 403) {
+        setMessage('GitHub blocked this token. Check repo access, SSO authorization, and Contents read/write permission.');
+      } else {
+        setMessage(err instanceof Error ? err.message : 'Error publishing. Check console.');
+      }
       console.error(err);
     } finally {
       setSubmitting(false);

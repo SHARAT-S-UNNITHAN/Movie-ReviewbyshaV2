@@ -10,6 +10,16 @@ interface GitHubContentResponse {
   message?: string;
 }
 
+export class GitHubPublishError extends Error {
+  status: number;
+
+  constructor(action: string, status: number) {
+    super(`GitHub ${action} failed: ${status}`);
+    this.name = 'GitHubPublishError';
+    this.status = status;
+  }
+}
+
 function encodeBase64(value: string) {
   return btoa(unescape(encodeURIComponent(value)));
 }
@@ -34,7 +44,7 @@ export async function createMovieReview(movie: Movie, token: string) {
   });
 
   if (!existingResponse.ok) {
-    throw new Error(`GitHub read failed: ${existingResponse.status}`);
+    throw new GitHubPublishError('read', existingResponse.status);
   }
 
   const existingFile = (await existingResponse.json()) as GitHubContentResponse;
@@ -67,7 +77,7 @@ export async function createMovieReview(movie: Movie, token: string) {
   });
 
   if (!response.ok) {
-    throw new Error(`GitHub publish failed: ${response.status}`);
+    throw new GitHubPublishError('publish', response.status);
   }
 
   return await response.json();
