@@ -1,6 +1,5 @@
-import { useState, FormEvent } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { createMovieReview, triggerDeployment } from '@/utils/github';
 import { Movie } from '@/types/movie';
 
 export default function AdminDashboard() {
@@ -13,29 +12,24 @@ export default function AdminDashboard() {
   const [submitting, setSubmitting] = useState(false);
   const [message, setMessage] = useState('');
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitting(true);
-    setMessage('');
 
-    try {
-      const movie: Movie = {
-        ...formData as Movie,
-        id: Date.now().toString(),
-        slug: formData.title?.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '') || '',
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-      };
+    const slug = (formData.title || '')
+      .toLowerCase()
+      .replace(/\s+/g, '-')
+      .replace(/[^a-z0-9-]/g, '');
 
-      await createMovieReview(movie);
-      await triggerDeployment();
+    const movie = {
+      ...formData,
+      id: Date.now().toString(),
+      slug,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
 
-      setMessage('Review published successfully! Site is being rebuilt.');
-    } catch (error) {
-      setMessage('Error publishing review. Please try again.');
-    } finally {
-      setSubmitting(false);
-    }
+    await navigator.clipboard.writeText(JSON.stringify(movie, null, 2));
+    setMessage('✅ Copied! Paste into public/data/movies.json, then npm run build && git push');
   };
 
   return (
