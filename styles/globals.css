@@ -1,0 +1,107 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply transition-colors duration-200;
+  }
+
+  body {
+    @apply bg-cinema-black text-cinema-text font-body;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-cinema-dark;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-cinema-accent rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-red-700;
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply bg-cinema-glass backdrop-blur-md border border-white/10 rounded-2xl shadow-2xl;
+  }
+
+  .glass-card:hover {
+    @apply border-white/20 shadow-cinema-accent/20;
+  }
+
+  .rating-circle {
+    @apply relative w-16 h-16 flex items-center justify-center;
+  }
+
+  .rating-circle svg {
+    @apply transform -rotate-90 w-16 h-16;
+  }
+
+  .rating-circle circle {
+    fill: none;
+    stroke-width: 4;
+  }
+
+  .rating-circle .bg-circle {
+    stroke: rgba(255, 255, 255, 0.1);
+  }
+
+  .rating-circle .progress-circle {
+    stroke: #E50914;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 1s ease-in-out;
+  }
+
+  .reading-progress {
+    @apply fixed top-0 left-0 h-1 bg-cinema-accent z-50 transition-all duration-300;
+  }
+
+  .movie-card-hover {
+    @apply transition-all duration-300 hover:scale-105 hover:-translate-y-2;
+  }
+
+  .shimmer-effect {
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.05) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite;
+  }
+
+  .hero-gradient {
+    background: linear-gradient(
+      135deg,
+      rgba(11, 15, 20, 0.95) 0%,
+      rgba(11, 15, 20, 0.8) 50%,
+      rgba(11, 15, 20, 0.6) 100%
+    );
+  }
+
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-cinema-text to-cinema-accent;
+  }
+}
+
+@layer utilities {
+  .mask-gradient-bottom {
+    mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+  }
+
+  .mask-gradient-right {
+    mask-image: linear-gradient(to right, black 60%, transparent 100%);
+  }
+}
+
