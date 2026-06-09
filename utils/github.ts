@@ -1,6 +1,6 @@
 import { Movie } from '@/types/movie';
 
-const GITHUB_TOKEN = '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';
+const GITHUB_TOKEN = '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';
 const REPO_OWNER = 'SHARAT-S-UNNITHAN';
 const REPO_NAME = 'Movie-ReviewbyshaV2';
 const BRANCH = 'main';
