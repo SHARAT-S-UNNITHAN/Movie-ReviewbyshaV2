@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Movie } from '@/types/movie';
+import { createMovieReview } from '@/utils/github';
 
 export default function AdminDashboard() {
   const [formData, setFormData] = useState<Partial<Movie>>({
@@ -14,22 +15,31 @@ export default function AdminDashboard() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setSubmitting(true);
+    setMessage('');
 
     const slug = (formData.title || '')
       .toLowerCase()
       .replace(/\s+/g, '-')
       .replace(/[^a-z0-9-]/g, '');
 
-    const movie = {
-      ...formData,
+    const movie: Movie = {
+      ...formData as Movie,
       id: Date.now().toString(),
       slug,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
 
-    await navigator.clipboard.writeText(JSON.stringify(movie, null, 2));
-    setMessage('✅ Copied! Paste into public/data/movies.json, then npm run build && git push');
+    try {
+      await createMovieReview(movie);
+      setMessage('✅ Review published! Site will rebuild automatically.');
+    } catch (err) {
+      setMessage('❌ Error publishing. Check console.');
+      console.error(err);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
