@@ -9,7 +9,7 @@ export function useMovies() {
   useEffect(() => {
     async function fetchMovies() {
       try {
-        const response = await fetch('/content/movies/index.json');
+        const response = await fetch('/data/movies.json');
         if (!response.ok) throw new Error('Failed to fetch movies');
         const data = await response.json();
         setMovies(data);
