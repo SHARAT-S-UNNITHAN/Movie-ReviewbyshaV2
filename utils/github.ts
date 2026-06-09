@@ -1,40 +1,74 @@
 import { Movie } from '@/types/movie';
 
-const GITHUB_TOKEN = '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';
 const REPO_OWNER = 'SHARAT-S-UNNITHAN';
 const REPO_NAME = 'Movie-ReviewbyshaV2';
 const BRANCH = 'main';
 
-export async function createMovieReview(movie: Movie) {
-  const path = `content/movies/${movie.slug}.json`;
-  const content = JSON.stringify(movie, null, 2);
-  const apiUrl = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${path}`;
-  
-  try {
-    const existingFile = await fetch(apiUrl, {
-      headers: { Authorization: `Bearer ${GITHUB_TOKEN}` },
-    }).then(res => res.json());
+interface GitHubContentResponse {
+  content?: string;
+  sha?: string;
+  message?: string;
+}
 
-    const body = {
-      message: `Add review: ${movie.title}`,
-      content: btoa(unescape(encodeURIComponent(content))),
-      branch: BRANCH,
-      ...(existingFile.sha && { sha: existingFile.sha }),
-    };
+function encodeBase64(value: string) {
+  return btoa(unescape(encodeURIComponent(value)));
+}
 
-    const response = await fetch(apiUrl, {
-      method: 'PUT',
-      headers: {
-        Authorization: `Bearer ${GITHUB_TOKEN}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(body),
-    });
+function decodeBase64(value: string) {
+  return decodeURIComponent(escape(atob(value.replace(/\s/g, ''))));
+}
 
-    if (!response.ok) throw new Error('Failed to create review');
-    return await response.json();
-  } catch (error) {
-    console.error('Error:', error);
-    throw error;
+export async function createMovieReview(movie: Movie, token: string) {
+  if (!token.trim()) {
+    throw new Error('GitHub token is required');
   }
+
+  const path = 'public/data/movies.json';
+  const apiUrl = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${path}`;
+
+  const existingResponse = await fetch(apiUrl, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/vnd.github+json',
+    },
+  });
+
+  if (!existingResponse.ok) {
+    throw new Error(`GitHub read failed: ${existingResponse.status}`);
+  }
+
+  const existingFile = (await existingResponse.json()) as GitHubContentResponse;
+  if (!existingFile.content || !existingFile.sha) {
+    throw new Error('GitHub response did not include movies.json content');
+  }
+
+  const movies = JSON.parse(decodeBase64(existingFile.content)) as Movie[];
+  const existingIndex = movies.findIndex((item) => item.slug === movie.slug);
+
+  if (existingIndex >= 0) {
+    movies[existingIndex] = movie;
+  } else {
+    movies.push(movie);
+  }
+
+  const response = await fetch(apiUrl, {
+    method: 'PUT',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/vnd.github+json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      message: `${existingIndex >= 0 ? 'Update' : 'Add'} review: ${movie.title}`,
+      content: encodeBase64(`${JSON.stringify(movies, null, 2)}\n`),
+      branch: BRANCH,
+      sha: existingFile.sha,
+    }),
+  });
+
+  if (!response.ok) {
+    throw new Error(`GitHub publish failed: ${response.status}`);
+  }
+
+  return await response.json();
 }

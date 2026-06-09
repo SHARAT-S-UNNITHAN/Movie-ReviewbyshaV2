@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Movie } from '@/types/movie';
 import { createMovieReview } from '@/utils/github';
@@ -12,11 +12,25 @@ export default function AdminDashboard() {
   });
   const [submitting, setSubmitting] = useState(false);
   const [message, setMessage] = useState('');
+  const [githubToken, setGithubToken] = useState('');
+
+  useEffect(() => {
+    setGithubToken(localStorage.getItem('adminGithubToken') || '');
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitting(true);
     setMessage('');
+
+    const token = githubToken.trim();
+    if (!token) {
+      setMessage('Add a GitHub token before publishing.');
+      setSubmitting(false);
+      return;
+    }
+
+    localStorage.setItem('adminGithubToken', token);
 
     const slug = (formData.title || '')
       .toLowerCase()
@@ -32,10 +46,10 @@ export default function AdminDashboard() {
     };
 
     try {
-      await createMovieReview(movie);
-      setMessage('✅ Review published! Site will rebuild automatically.');
+      await createMovieReview(movie, token);
+      setMessage('Review published. Site will rebuild automatically.');
     } catch (err) {
-      setMessage('❌ Error publishing. Check console.');
+      setMessage(err instanceof Error ? err.message : 'Error publishing. Check console.');
       console.error(err);
     } finally {
       setSubmitting(false);
@@ -54,6 +68,19 @@ export default function AdminDashboard() {
           </h1>
 
           <form onSubmit={handleSubmit} className="space-y-8">
+            <div className="glass-card p-8">
+              <h2 className="font-heading text-3xl mb-6">GitHub Access</h2>
+              <label className="block text-sm font-semibold mb-2">Personal Access Token</label>
+              <input
+                type="password"
+                value={githubToken}
+                onChange={(e) => setGithubToken(e.target.value)}
+                className="w-full bg-cinema-dark border border-white/10 rounded-lg px-4 py-3 focus:outline-none focus:border-cinema-accent"
+                autoComplete="off"
+                required
+              />
+            </div>
+
             <div className="glass-card p-8">
               <h2 className="font-heading text-3xl mb-6">Movie Details</h2>
 
