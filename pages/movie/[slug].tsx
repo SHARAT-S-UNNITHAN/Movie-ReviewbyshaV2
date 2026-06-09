@@ -1,30 +1,24 @@
+import fs from 'fs';
+import path from 'path';
 import Head from 'next/head';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { motion } from 'framer-motion';
-import { ArrowLeftIcon, PlayIcon } from '@heroicons/react/24/solid';
-import { useMovie } from '@/hooks/useMovies';
+import { PlayIcon } from '@heroicons/react/24/solid';
 import ReadingProgress from '@/components/ReadingProgress';
+import { Movie } from '@/types/movie';
 
-export default function MovieDetailPage() {
-  const router = useRouter();
-  const { slug } = router.query as { slug?: string };
-  const { movie, loading } = useMovie(slug || '');
+const BASE_PATH = process.env.NODE_ENV === 'production' ? '/Movie-ReviewbyshaV2' : '';
 
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-cinema-black text-cinema-text flex items-center justify-center px-6">
-        <p className="text-xl text-cinema-secondary">Loading review...</p>
-      </div>
-    );
-  }
+interface MovieDetailPageProps {
+  movie: Movie;
+}
 
+export default function MovieDetailPage({ movie }: MovieDetailPageProps) {
   if (!movie) {
     return (
       <div className="min-h-screen bg-cinema-black text-cinema-text flex items-center justify-center px-6">
         <div className="text-center">
           <p className="text-2xl font-semibold mb-4">Review not found</p>
-          <Link href="/" className="glass-card px-6 py-3 text-cinema-text hover:bg-cinema-accent/20">
+          <Link href={`${BASE_PATH}/`} className="glass-card px-6 py-3 text-cinema-text hover:bg-cinema-accent/20">
             Back to home
           </Link>
         </div>
@@ -48,9 +42,13 @@ export default function MovieDetailPage() {
         >
           <div className="absolute inset-0 hero-gradient" />
           <div className="relative container mx-auto px-6 pt-24 pb-20">
-            <Link href="/" className="inline-flex items-center gap-2 text-cinema-secondary mb-8">
-              <ArrowLeftIcon className="w-5 h-5" /> Back to cinema
+            <Link href={`${BASE_PATH}/`} className="inline-flex items-center gap-2 text-cinema-secondary mb-8">
+              <span className="inline-flex items-center gap-2">
+                <span aria-hidden="true">←</span>
+              </span>
+              Back to cinema
             </Link>
+
             <div className="glass-card p-10 max-w-5xl mx-auto">
               <div className="grid gap-10 lg:grid-cols-[1.4fr_1fr] items-start">
                 <div>
@@ -75,16 +73,18 @@ export default function MovieDetailPage() {
                   <div className="bg-cinema-dark rounded-3xl p-6">
                     <p className="text-sm uppercase tracking-[0.3em] text-cinema-accent mb-4">Rating</p>
                     <div className="flex items-center gap-4">
-                      <div className="rating-circle">
-                        <svg viewBox="0 0 36 36">
+                      <div className="rating-circle relative">
+                        <svg viewBox="0 0 36 36" className="w-24 h-24">
                           <circle className="bg-circle" cx="18" cy="18" r="16" />
-                          <circle 
+                          <circle
                             className="progress-circle"
-                            cx="18" cy="18" r="16"
+                            cx="18"
+                            cy="18"
+                            r="16"
                             strokeDasharray={`${(movie.rating / 10) * 100} 100`}
                           />
                         </svg>
-                        <span className="absolute text-lg font-bold text-cinema-gold">{movie.rating}</span>
+                        <span className="absolute inset-0 grid place-items-center text-lg font-bold text-cinema-gold">{movie.rating}</span>
                       </div>
                       <div>
                         <p className="text-xl font-semibold">{movie.rating}/10</p>
@@ -92,6 +92,7 @@ export default function MovieDetailPage() {
                       </div>
                     </div>
                   </div>
+
                   <a
                     href={movie.trailerUrl}
                     target="_blank"
@@ -156,19 +157,33 @@ export default function MovieDetailPage() {
 }
 
 export async function getStaticPaths() {
-  const fs = require('fs');
-  const path = require('path');
-  
-  const moviesDir = path.join(process.cwd(), 'public/content/movies');
-  const files = fs.readdirSync(moviesDir).filter((file: string) => file.endsWith('.json') && file !== 'index.json');
-  
-  const paths = files.map((file: string) => ({
-    params: { slug: file.replace('.json', '') },
+  const moviesFile = path.join(process.cwd(), 'public', 'data', 'movies.json');
+  const raw = fs.readFileSync(moviesFile, 'utf8');
+  const movies: Movie[] = JSON.parse(raw);
+
+  const paths = movies.map((movie) => ({
+    params: { slug: movie.slug },
   }));
 
-  return { paths, fallback: false };
+  return {
+    paths,
+    fallback: false,
+  };
 }
 
-export async function getStaticProps() {
-  return { props: {} };
+export async function getStaticProps({ params }: { params: { slug: string } }) {
+  const moviesFile = path.join(process.cwd(), 'public', 'data', 'movies.json');
+  const raw = fs.readFileSync(moviesFile, 'utf8');
+  const movies: Movie[] = JSON.parse(raw);
+  const movie = movies.find((item) => item.slug === params.slug);
+
+  if (!movie) {
+    return { notFound: true };
+  }
+
+  return {
+    props: {
+      movie,
+    },
+  };
 }

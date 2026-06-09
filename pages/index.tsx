@@ -43,7 +43,7 @@ export default function Home() {
         <title>CineReview - Premium Movie Reviews</title>
         <meta name="description" content="Discover in-depth movie reviews, ratings, and recommendations" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href={`${process.env.NODE_ENV === 'production' ? '/Movie-ReviewbyshaV2' : ''}/favicon.ico`} />
       </Head>
 
       <ReadingProgress />

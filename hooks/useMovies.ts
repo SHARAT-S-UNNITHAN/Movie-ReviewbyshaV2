@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Movie } from '@/types/movie';
 
+const BASE_PATH = process.env.NODE_ENV === 'production' ? '/Movie-ReviewbyshaV2' : '';
+const MOVIES_PATH = `${BASE_PATH}/data/movies.json`;
+
 export function useMovies() {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [loading, setLoading] = useState(true);
@@ -9,7 +12,7 @@ export function useMovies() {
   useEffect(() => {
     async function fetchMovies() {
       try {
-        const response = await fetch('/data/movies.json');
+        const response = await fetch(MOVIES_PATH);
         if (!response.ok) throw new Error('Failed to fetch movies');
         const data = await response.json();
         setMovies(data);
@@ -34,10 +37,10 @@ export function useMovie(slug: string) {
   useEffect(() => {
     async function fetchMovie() {
       try {
-        const response = await fetch(`/content/movies/${slug}.json`);
+        const response = await fetch(MOVIES_PATH);
         if (!response.ok) throw new Error('Movie not found');
-        const data = await response.json();
-        setMovie(data);
+        const data: Movie[] = await response.json();
+        setMovie(data.find((item) => item.slug === slug) ?? null);
       } catch (err) {
         console.error('Error fetching movie:', err);
       } finally {

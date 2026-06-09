@@ -2,6 +2,8 @@ import { motion } from 'framer-motion';
 import { StarIcon, ClockIcon, CalendarIcon } from '@heroicons/react/24/solid';
 import Link from 'next/link';
 
+const BASE_PATH = process.env.NODE_ENV === 'production' ? '/Movie-ReviewbyshaV2' : '';
+
 interface MovieCardProps {
   movie: {
     title: string;
@@ -24,7 +26,7 @@ export default function MovieCard({ movie, index = 0 }: MovieCardProps) {
       whileHover={{ y: -10 }}
       className="group cursor-pointer"
     >
-      <Link href={`/movie/${movie.slug}`}>
+      <Link href={`${BASE_PATH}/movie/${movie.slug}`}>
         <div className="glass-card overflow-hidden">
           <div className="relative aspect-[2/3] overflow-hidden">
             <img 
