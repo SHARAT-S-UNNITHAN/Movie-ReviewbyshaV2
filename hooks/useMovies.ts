@@ -9,7 +9,7 @@ export function useMovies() {
   useEffect(() => {
     async function fetchMovies() {
       try {
-        const response = await fetch('/data/movies.json');
+        const response = await fetch('./data/movies.json');
         if (!response.ok) throw new Error('Failed to fetch movies');
         const data = await response.json();
         setMovies(data);
@@ -34,7 +34,7 @@ export function useMovie(slug: string) {
   useEffect(() => {
     async function fetchMovie() {
       try {
-        const response = await fetch('/data/movies.json');
+        const response = await fetch('./data/movies.json');
         if (!response.ok) throw new Error('Movie not found');
         const data: Movie[] = await response.json();
         setMovie(data.find((item) => item.slug === slug) ?? null);
