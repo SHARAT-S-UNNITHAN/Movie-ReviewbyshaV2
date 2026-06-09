@@ -154,3 +154,21 @@ export default function MovieDetailPage() {
     </>
   );
 }
+
+export async function getStaticPaths() {
+  const fs = require('fs');
+  const path = require('path');
+  
+  const moviesDir = path.join(process.cwd(), 'public/content/movies');
+  const files = fs.readdirSync(moviesDir).filter((file: string) => file.endsWith('.json') && file !== 'index.json');
+  
+  const paths = files.map((file: string) => ({
+    params: { slug: file.replace('.json', '') },
+  }));
+
+  return { paths, fallback: false };
+}
+
+export async function getStaticProps() {
+  return { props: {} };
+}
