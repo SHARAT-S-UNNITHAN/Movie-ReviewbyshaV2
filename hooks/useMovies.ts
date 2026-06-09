@@ -9,11 +9,12 @@ export function useMovies() {
   useEffect(() => {
     async function fetchMovies() {
       try {
-        const response = await fetch('/data/movies.json');
+        const response = await fetch('/content/movies/index.json');
         if (!response.ok) throw new Error('Failed to fetch movies');
         const data = await response.json();
         setMovies(data);
       } catch (err) {
+        console.error('Error fetching movie index:', err);
         setError(err instanceof Error ? err.message : 'An error occurred');
       } finally {
         setLoading(false);
@@ -49,4 +50,3 @@ export function useMovie(slug: string) {
 
   return { movie, loading };
 }
-
