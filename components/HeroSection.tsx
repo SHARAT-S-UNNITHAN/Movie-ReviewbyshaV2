@@ -2,7 +2,6 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { PlayIcon, StarIcon, InformationCircleIcon } from '@heroicons/react/24/solid';
 import Link from 'next/link';
 
-const BASE_PATH = process.env.NODE_ENV === 'production' ? '/Movie-ReviewbyshaV2' : '';
 
 interface HeroSectionProps {
   movie: {
@@ -114,7 +113,7 @@ export default function HeroSection({ movie }: HeroSectionProps) {
               <span className="font-semibold">Watch Trailer</span>
             </Link>
             <Link
-              href={`${BASE_PATH}/movie/${movie.slug}`}
+              href={`/movie/${movie.slug}`}
               className="glass-card px-8 py-4 flex items-center gap-3 hover:bg-cinema-accent/20 group"
             >
               <InformationCircleIcon className="w-6 h-6 group-hover:scale-110 transition-transform" />
