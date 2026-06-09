@@ -5,23 +5,82 @@
     "posterUrl": "https://images.unsplash.com/photo-1517602302552-471fe67acf66?auto=format&fit=crop&w=800&q=80",
     "backdropUrl": "https://images.unsplash.com/photo-1516919561351-7c5e2db5cdbd?auto=format&fit=crop&w=1400&q=80",
     "releaseDate": "2026-05-15",
-    "genre": ["Sci-Fi", "Thriller", "Adventure"],
+    "genre": [
+      "Sci-Fi",
+      "Thriller",
+      "Adventure"
+    ],
     "director": "Maya Alvarez",
-    "cast": ["Riley Carter", "Noah Kim", "Avery Stone"],
+    "cast": [
+      "Riley Carter",
+      "Noah Kim",
+      "Avery Stone"
+    ],
     "runtime": 132,
     "trailerUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
     "rating": 8.7,
     "reviewSummary": "A dazzling science-fiction journey with pulse-pounding suspense and emotional depth.",
-    "whatILoved": ["Stunning visual world-building", "A compelling central performance", "A score that lingers"],
-    "whatIDidntLike": ["A handful of predictable beats", "Some supporting characters feel underused"],
+    "whatILoved": [
+      "Stunning visual world-building",
+      "A compelling central performance",
+      "A score that lingers"
+    ],
+    "whatIDidntLike": [
+      "A handful of predictable beats",
+      "Some supporting characters feel underused"
+    ],
     "fullReview": "Spectral Horizon is an immersive blockbuster that blends high-concept sci-fi with grounded emotional stakes. Maya Alvarez crafts a world that feels both futuristic and intimate, anchored by Riley Carter's luminous lead performance. The pacing is taut, the set pieces are inventive, and the film's best moments come from quieter scenes that underscore the characters' humanity. While a few plot threads feel rushed, the movie delivers a thrilling experience that keeps you thinking long after the credits roll.",
     "finalVerdict": "A must-see for sci-fi fans who crave spectacle with heart.",
     "isFeatured": true,
     "createdAt": "2026-05-16T08:00:00.000Z",
     "updatedAt": "2026-05-16T08:00:00.000Z",
     "slug": "spectral-horizon",
-    "watchProviders": ["Prime Video", "Apple TV+"],
-    "awards": ["Best Visual Effects Nominee"],
+    "watchProviders": [
+      "Prime Video",
+      "Apple TV+"
+    ],
+    "awards": [
+      "Best Visual Effects Nominee"
+    ],
     "boxOffice": "$238M"
+  },
+  {
+    "genre": [
+      "War",
+      "Action",
+      "Drama"
+    ],
+    "cast": [
+      "Vicky Kaushal",
+      "Paresh Rawal",
+      "Yami Gautam",
+      "Mohit Raina"
+    ],
+    "whatILoved": [
+      "Vicky Kaushal delivers a stellar performance as Major Vihaan Singh Shergill, capturing the emotional and physical toll of the mission while portraying the calm, methodical, and strong-willed character. His portrayal of a soldier caught between patriotism and personal loss is highly commendable.",
+      "",
+      "Paresh Rawal plays National Security Advisor Govind Bharadwaj, who is responsible for planning the surgical strike. His character adds a layer of complexity to the narrative, reflecting the emotional burden of making tough decisions for the greater good.",
+      "",
+      "The supporting cast, including Yami Gautam as the RAW officer and Mohit Raina as Major Vihaan’s colleague, also bring strong performances, adding depth and nuance to the film’s narrative."
+    ],
+    "whatIDidntLike": [
+      "Nothing"
+    ],
+    "director": "Aditya Dhar",
+    "title": "Uri: The Surgical Strike",
+    "posterUrl": "https://sharat-s-unnithan.github.io/sharatmoviereviews.io/images/uri-poster.jpg",
+    "backdropUrl": "https://sharat-s-unnithan.github.io/sharatmoviereviews.io/images/uri-poster.jpg",
+    "releaseDate": "2019-01-11",
+    "runtime": 138,
+    "trailerUrl": "https://youtu.be/VVY3do673Zc?si=Li_sSUXvZzLM8I2y",
+    "rating": 9,
+    "reviewSummary": "Uri: The Surgical Strike, directed by Aditya Dhar, is a gripping and patriotic war drama that captures the 2016 surgical strikes carried out by India on terror camps in Pakistan-occupied Kashmir. The film, with its powerful narrative and intense performances, showcases the bravery, sacrifice, and emotional turmoil faced by the Indian Army during this covert military operation.",
+    "fullReview": "As someone who deeply respects the sacrifices made by the armed forces, Uri: The Surgical Strike hits home on a personal level. The film captures the resilience, strength, and determination of the soldiers in a way that is both motivating and humbling. The narrative isn’t just about the operation; it’s about the personal stories behind it—the soldiers who risk their lives and the emotional toll of carrying out such missions.\n\nWhat stands out is the film’s ability to invoke patriotism without resorting to jingoism. It shows the human side of war and its impact on the lives of the soldiers, their families, and their comrades. It’s a reminder of the sacrifices made by those who protect the nation, and it makes you feel a deep sense of pride and respect for the Indian Armed Forces.Uri: The Surgical Strike is an intense, gripping, and well-made war film that successfully captures the heroism, strategy, and emotional complexities of the 2016 surgical strike. With its strong performances, tight direction, and powerful message, it is a must-watch for fans of war dramas and those who appreciate films that honor the sacrifices made by our soldiers.",
+    "finalVerdict": "Uri is a film that will stay with you, invoking feelings of pride, admiration, and respect for the men and women who serve the nation. It’s a true testament to their strength, courage, and unwavering commitment to protect the country.",
+    "isFeatured": true,
+    "id": "1781027552893",
+    "slug": "uri-the-surgical-strike",
+    "createdAt": "2026-06-09T17:52:32.893Z",
+    "updatedAt": "2026-06-09T17:52:32.893Z"
   }
 ]
