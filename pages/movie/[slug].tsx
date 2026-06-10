@@ -6,8 +6,6 @@ import { PlayIcon } from '@heroicons/react/24/solid';
 import ReadingProgress from '@/components/ReadingProgress';
 import { Movie } from '@/types/movie';
 
-const BASE_PATH = process.env.NODE_ENV === 'production' ? '/Movie-ReviewbyshaV2' : '';
-
 interface MovieDetailPageProps {
   movie: Movie;
 }
@@ -18,7 +16,7 @@ export default function MovieDetailPage({ movie }: MovieDetailPageProps) {
       <div className="min-h-screen bg-cinema-black text-cinema-text flex items-center justify-center px-6">
         <div className="text-center">
           <p className="text-2xl font-semibold mb-4">Review not found</p>
-          <Link href={`${BASE_PATH}/`} className="glass-card px-6 py-3 text-cinema-text hover:bg-cinema-accent/20">
+          <Link href="/" className="glass-card px-6 py-3 text-cinema-text hover:bg-cinema-accent/20">
             Back to home
           </Link>
         </div>
@@ -42,10 +40,8 @@ export default function MovieDetailPage({ movie }: MovieDetailPageProps) {
         >
           <div className="absolute inset-0 hero-gradient" />
           <div className="relative container mx-auto px-6 pt-24 pb-20">
-            <Link href={`${BASE_PATH}/`} className="inline-flex items-center gap-2 text-cinema-secondary mb-8">
-              <span className="inline-flex items-center gap-2">
-                <span aria-hidden="true">←</span>
-              </span>
+            <Link href="/" className="inline-flex items-center gap-2 text-cinema-secondary mb-8">
+              <span aria-hidden="true">←</span>
               Back to cinema
             </Link>
 
@@ -165,10 +161,7 @@ export async function getStaticPaths() {
     params: { slug: movie.slug },
   }));
 
-  return {
-    paths,
-    fallback: false,
-  };
+  return { paths, fallback: false };
 }
 
 export async function getStaticProps({ params }: { params: { slug: string } }) {
@@ -181,9 +174,5 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
     return { notFound: true };
   }
 
-  return {
-    props: {
-      movie,
-    },
-  };
+  return { props: { movie } };
 }
