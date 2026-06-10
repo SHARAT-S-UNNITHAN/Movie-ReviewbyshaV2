@@ -1,0 +1,10 @@
+{
+  "showTrending": true,
+  "showTopRated": true,
+  "showRatingDistribution": true,
+  "showStatsBar": true,
+  "trendingCount": 6,
+  "topRatedCount": 10,
+  "homepageTitle": "CineReview",
+  "homepageSubtitle": "Premium Movie Reviews"
+}

@@ -34,6 +34,7 @@
     "isFeatured": true,
     "createdAt": "2026-05-16T08:00:00.000Z",
     "updatedAt": "2026-05-16T08:00:00.000Z",
+    "status": "published",
     "slug": "spectral-horizon",
     "watchProviders": [
       "Prime Video",
@@ -78,6 +79,7 @@
     "fullReview": "As someone who deeply respects the sacrifices made by the armed forces, Uri: The Surgical Strike hits home on a personal level. The film captures the resilience, strength, and determination of the soldiers in a way that is both motivating and humbling. The narrative isn’t just about the operation; it’s about the personal stories behind it—the soldiers who risk their lives and the emotional toll of carrying out such missions.\n\nWhat stands out is the film’s ability to invoke patriotism without resorting to jingoism. It shows the human side of war and its impact on the lives of the soldiers, their families, and their comrades. It’s a reminder of the sacrifices made by those who protect the nation, and it makes you feel a deep sense of pride and respect for the Indian Armed Forces.Uri: The Surgical Strike is an intense, gripping, and well-made war film that successfully captures the heroism, strategy, and emotional complexities of the 2016 surgical strike. With its strong performances, tight direction, and powerful message, it is a must-watch for fans of war dramas and those who appreciate films that honor the sacrifices made by our soldiers.",
     "finalVerdict": "Uri is a film that will stay with you, invoking feelings of pride, admiration, and respect for the men and women who serve the nation. It’s a true testament to their strength, courage, and unwavering commitment to protect the country.",
     "isFeatured": true,
+    "status": "published",
     "id": "1781027552893",
     "slug": "uri-the-surgical-strike",
     "createdAt": "2026-06-09T17:52:32.893Z",
