@@ -80,7 +80,12 @@ export default function Home() {
           </motion.h1>
           
           <div className="flex items-center gap-4">
-            <SearchBar onSearch={(query) => setFilters({ ...filters, search: query })} resultCount={filteredMovies.length} />
+            <SearchBar 
+  onSearch={(query) => setFilters({ ...filters, search: query })} 
+  resultCount={filteredMovies.length} 
+  movies={movies}
+  basePath={process.env.NODE_ENV === 'production' ? '/Movie-ReviewbyshaV2' : ''}
+/>
             <ThemeToggle />
           </div>
         </div>

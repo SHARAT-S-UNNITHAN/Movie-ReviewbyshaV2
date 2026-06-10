@@ -1,13 +1,17 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MagnifyingGlassIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import Link from 'next/link';
+import { Movie } from '@/types/movie';
 
 interface SearchBarProps {
   onSearch: (query: string) => void;
   resultCount?: number;
+  movies?: Movie[];
+  basePath?: string;
 }
 
-export default function SearchBar({ onSearch, resultCount = 0 }: SearchBarProps) {
+export default function SearchBar({ onSearch, resultCount = 0, movies = [], basePath = '' }: SearchBarProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
@@ -18,7 +22,6 @@ export default function SearchBar({ onSearch, resultCount = 0 }: SearchBarProps)
     }
   }, [isOpen]);
 
-  // Keyboard shortcut: Ctrl+K to open search
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
@@ -37,6 +40,14 @@ export default function SearchBar({ onSearch, resultCount = 0 }: SearchBarProps)
     setQuery(value);
     onSearch(value);
   };
+
+  const filteredMovies = query
+    ? movies.filter(m => 
+        m.title.toLowerCase().includes(query.toLowerCase()) ||
+        m.director.toLowerCase().includes(query.toLowerCase()) ||
+        m.genre.some(g => g.toLowerCase().includes(query.toLowerCase()))
+      ).slice(0, 5)
+    : [];
 
   return (
     <>
@@ -92,14 +103,47 @@ export default function SearchBar({ onSearch, resultCount = 0 }: SearchBarProps)
                   )}
                 </div>
 
+                {/* Search Results Dropdown */}
+                <AnimatePresence>
+                  {query && filteredMovies.length > 0 && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      className="mt-2 glass-card overflow-hidden"
+                    >
+                      {filteredMovies.map((movie) => (
+                        <Link
+                          key={movie.id}
+                          href={`${basePath}/movie/${movie.slug}`}
+                          onClick={() => setIsOpen(false)}
+                          className="flex items-center gap-4 p-4 hover:bg-cinema-dark/50 transition-colors border-b border-white/5 last:border-0"
+                        >
+                          <img 
+                            src={movie.posterUrl} 
+                            alt={movie.title}
+                            className="w-10 h-14 object-cover rounded"
+                          />
+                          <div>
+                            <p className="font-semibold text-cinema-text">{movie.title}</p>
+                            <p className="text-sm text-cinema-secondary">{movie.director} · {movie.rating}/10</p>
+                          </div>
+                        </Link>
+                      ))}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   className="mt-4 text-center"
                 >
-                  {query ? (
-                    <p className="text-cinema-secondary">
-                      <span className="text-cinema-accent font-semibold">{resultCount}</span> movies found
+                  {query && filteredMovies.length === 0 ? (
+                    <p className="text-cinema-secondary">No movies found for "{query}"</p>
+                  ) : query ? (
+                    <p className="text-cinema-secondary text-sm">
+                      <span className="text-cinema-accent font-semibold">{resultCount}</span> movies match your search
                     </p>
                   ) : (
                     <p className="text-cinema-secondary text-sm">
