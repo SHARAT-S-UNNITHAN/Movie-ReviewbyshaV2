@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Movie } from '@/types/movie';
+import { getPublicDataBase } from '@/utils/publicDataBase';
 
-const PUBLIC_DATA_BASE = process.env.NEXT_PUBLIC_BASE_PATH || '';
+const PUBLIC_DATA_BASE = getPublicDataBase();
 
 export function useMovies() {
   const [movies, setMovies] = useState<Movie[]>([]);

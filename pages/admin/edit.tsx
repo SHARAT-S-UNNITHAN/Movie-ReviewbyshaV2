@@ -5,8 +5,9 @@ import SearchBar from '@/components/SearchBar';
 import ThemeToggle from '@/components/ThemeToggle';
 import { Movie } from '@/types/movie';
 import { GitHubPublishError, createMovieReview, deleteMovie } from '@/utils/github';
+import { getPublicDataBase } from '@/utils/publicDataBase';
 
-const PUBLIC_DATA_BASE = process.env.NEXT_PUBLIC_BASE_PATH || '';
+const PUBLIC_DATA_BASE = getPublicDataBase();
 
 export default function AdminEditPage() {
   const [movies, setMovies] = useState<Movie[]>([]);

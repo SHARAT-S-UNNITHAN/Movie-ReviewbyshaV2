@@ -12,6 +12,7 @@
   import Link from 'next/link';
   import { ArrowUpIcon, FilmIcon, StarIcon, ClockIcon, FireIcon, TrophyIcon, BookmarkIcon } from '@heroicons/react/24/outline';
   import RatingDistribution from '@/components/RatingDistribution';
+  import { getPublicDataBase } from '@/utils/publicDataBase';
 
   interface SiteConfig {
     showTrending: boolean;
@@ -35,7 +36,7 @@
     homepageSubtitle: 'Premium Movie Reviews',
   };
 
-  const PUBLIC_DATA_BASE = process.env.NEXT_PUBLIC_BASE_PATH || '';
+  const PUBLIC_DATA_BASE = getPublicDataBase();
 
   export default function Home() {
     const { movies, loading } = useMovies();

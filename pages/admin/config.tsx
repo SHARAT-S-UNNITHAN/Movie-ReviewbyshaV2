@@ -4,6 +4,7 @@ import Link from 'next/link';
 import SearchBar from '@/components/SearchBar';
 import ThemeToggle from '@/components/ThemeToggle';
 import { updateSiteConfig } from '@/utils/github';
+import { getPublicDataBase } from '@/utils/publicDataBase';
 
 interface SiteConfig {
   showTrending: boolean;
@@ -27,7 +28,7 @@ const defaultConfig: SiteConfig = {
   homepageSubtitle: 'Premium Movie Reviews',
 };
 
-const PUBLIC_DATA_BASE = process.env.NEXT_PUBLIC_BASE_PATH || '';
+const PUBLIC_DATA_BASE = getPublicDataBase();
 
 export default function AdminConfigPage() {
   const [siteConfig, setSiteConfig] = useState<SiteConfig>(defaultConfig);
