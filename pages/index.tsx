@@ -84,7 +84,6 @@ export default function Home() {
   onSearch={(query) => setFilters({ ...filters, search: query })} 
   resultCount={filteredMovies.length} 
   movies={movies}
-  basePath={process.env.NODE_ENV === 'production' ? '/Movie-ReviewbyshaV2' : ''}
 />
             <ThemeToggle />
           </div>

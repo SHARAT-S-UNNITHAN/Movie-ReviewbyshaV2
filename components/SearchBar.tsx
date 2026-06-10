@@ -115,7 +115,7 @@ export default function SearchBar({ onSearch, resultCount = 0, movies = [], base
                       {filteredMovies.map((movie) => (
                         <Link
                           key={movie.id}
-                          href={`${basePath}/movie/${movie.slug}`}
+                          href={`/movie/${movie.slug}`}
                           onClick={() => setIsOpen(false)}
                           className="flex items-center gap-4 p-4 hover:bg-cinema-dark/50 transition-colors border-b border-white/5 last:border-0"
                         >
