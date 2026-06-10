@@ -10,7 +10,7 @@ import { useMovies } from '@/hooks/useMovies';
 import { FilterState } from '@/types/movie';
 import Head from 'next/head';
 import Link from 'next/link';
-import { ArrowUpIcon, FilmIcon, StarIcon, ClockIcon, FireIcon, TrophyIcon } from '@heroicons/react/24/outline';
+import { ArrowUpIcon, FilmIcon, StarIcon, ClockIcon, FireIcon, TrophyIcon, BookmarkIcon } from '@heroicons/react/24/outline';
 import RatingDistribution from '@/components/RatingDistribution';
 
 export default function Home() {
