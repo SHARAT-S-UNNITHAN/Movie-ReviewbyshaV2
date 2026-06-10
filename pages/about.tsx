@@ -2,6 +2,8 @@ import { motion } from 'framer-motion';
 import Head from 'next/head';
 import Link from 'next/link';
 import ReadingProgress from '@/components/ReadingProgress';
+import SearchBar from '@/components/SearchBar';
+import ThemeToggle from '@/components/ThemeToggle';
 
 export default function About() {
   return (
@@ -13,7 +15,22 @@ export default function About() {
 
       <ReadingProgress />
 
-      <main className="min-h-screen bg-cinema-black text-cinema-text pt-24">
+      <nav className="fixed top-0 left-0 right-0 z-40 bg-cinema-black/50 backdrop-blur-md border-b border-white/10">
+        <div className="container mx-auto px-6 py-4 flex flex-wrap items-center justify-between gap-4">
+          <div className="flex items-center gap-6">
+            <Link href="/" className="text-cinema-accent font-heading text-xl">CineReview</Link>
+            <Link href="/" className="text-cinema-secondary hover:text-cinema-accent">Home</Link>
+            <Link href="/about" className="text-cinema-text font-semibold">About</Link>
+            <Link href="/admin" className="text-cinema-secondary hover:text-cinema-accent">Admin</Link>
+          </div>
+          <div className="flex items-center gap-4">
+            <SearchBar onSearch={() => {}} movies={[]} />
+            <ThemeToggle />
+          </div>
+        </div>
+      </nav>
+
+      <main className="min-h-screen bg-cinema-black text-cinema-text pt-28">
         <div className="container mx-auto px-6 py-20 max-w-4xl">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
             <Link href="/" className="text-cinema-secondary hover:text-cinema-accent mb-8 inline-block">← Back to cinema</Link>

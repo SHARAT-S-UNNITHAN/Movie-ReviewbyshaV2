@@ -1,24 +1,51 @@
-import { useEffect, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import Head from 'next/head';
+import Link from 'next/link';
+import SearchBar from '@/components/SearchBar';
+import ThemeToggle from '@/components/ThemeToggle';
 import { Movie } from '@/types/movie';
-import { GitHubPublishError, createMovieReview } from '@/utils/github';
+import { GitHubPublishError, createMovieReview, deleteMovie } from '@/utils/github';
+
+const PUBLIC_DATA_BASE = process.env.NEXT_PUBLIC_BASE_PATH || '';
 
 export default function AdminDashboard() {
   const [formData, setFormData] = useState<Partial<Movie>>({
+    status: 'published',
     genre: [],
     cast: [],
     whatILoved: [],
     whatIDidntLike: [],
+    isFeatured: false,
   });
   const [submitting, setSubmitting] = useState(false);
   const [message, setMessage] = useState('');
   const [githubToken, setGithubToken] = useState('');
+  const [allMovies, setAllMovies] = useState<Movie[]>([]);
+  const [loadingMovies, setLoadingMovies] = useState(true);
 
   useEffect(() => {
     setGithubToken(localStorage.getItem('adminGithubToken') || '');
   }, []);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  useEffect(() => {
+    async function fetchMovies() {
+      try {
+        const response = await fetch(`${PUBLIC_DATA_BASE}/data/movies.json`);
+        if (!response.ok) throw new Error('Failed to load movies');
+        const data = (await response.json()) as Movie[];
+        setAllMovies(data);
+      } catch (err) {
+        console.error('Error loading movie data:', err);
+      } finally {
+        setLoadingMovies(false);
+      }
+    }
+
+    fetchMovies();
+  }, []);
+
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setSubmitting(true);
     setMessage('');
@@ -32,22 +59,41 @@ export default function AdminDashboard() {
 
     localStorage.setItem('adminGithubToken', token);
 
+    if (!formData.title) {
+      setMessage('Movie title is required.');
+      setSubmitting(false);
+      return;
+    }
+
     const slug = (formData.title || '')
       .toLowerCase()
       .replace(/\s+/g, '-')
       .replace(/[^a-z0-9-]/g, '');
 
     const movie: Movie = {
-      ...formData as Movie,
-      id: Date.now().toString(),
+      ...(formData as Movie),
+      id: formData.id || Date.now().toString(),
       slug,
-      createdAt: new Date().toISOString(),
+      createdAt: formData.createdAt || new Date().toISOString(),
       updatedAt: new Date().toISOString(),
+      status: formData.status || 'published',
     };
 
     try {
       await createMovieReview(movie, token);
-      setMessage('Review published. Site will rebuild automatically.');
+      setMessage('Review published. Site data was updated successfully.');
+      const response = await fetch(`${PUBLIC_DATA_BASE}/data/movies.json`);
+      if (response.ok) {
+        setAllMovies((await response.json()) as Movie[]);
+      }
+      setFormData({
+        status: 'published',
+        genre: [],
+        cast: [],
+        whatILoved: [],
+        whatIDidntLike: [],
+        isFeatured: false,
+      });
     } catch (err) {
       if (err instanceof GitHubPublishError && err.status === 401) {
         localStorage.removeItem('adminGithubToken');
@@ -65,15 +111,40 @@ export default function AdminDashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-cinema-black text-cinema-text">
-      <div className="container mx-auto px-6 py-12 max-w-4xl">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-        >
-          <h1 className="font-heading text-5xl text-cinema-accent mb-8">
-            Admin Dashboard
-          </h1>
+    <>
+      <Head>
+        <title>Admin · CineReview</title>
+        <meta name="description" content="Manage movie reviews and site configuration" />
+      </Head>
+
+      <nav className="fixed top-0 left-0 right-0 z-40 bg-cinema-black/50 backdrop-blur-md border-b border-white/10">
+        <div className="container mx-auto px-6 py-4 flex flex-wrap items-center justify-between gap-4">
+          <div className="flex items-center gap-6">
+            <Link href="/" className="text-cinema-accent font-heading text-xl">CineReview</Link>
+            <Link href="/" className="text-cinema-secondary hover:text-cinema-accent">Home</Link>
+            <Link href="/about" className="text-cinema-secondary hover:text-cinema-accent">About</Link>
+            <Link href="/admin" className="text-cinema-text font-semibold">Admin</Link>
+          </div>
+          <div className="flex items-center gap-4">
+            <SearchBar onSearch={() => {}} movies={[]} />
+            <ThemeToggle />
+          </div>
+        </div>
+      </nav>
+
+      <main className="pt-28 min-h-screen bg-cinema-black text-cinema-text">
+        <div className="container mx-auto px-6 py-12 max-w-4xl">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between mb-8">
+              <div>
+                <h1 className="font-heading text-5xl text-cinema-accent">Admin Dashboard</h1>
+                <p className="text-cinema-secondary mt-2">Publish reviews, preview content, and manage site configuration.</p>
+              </div>
+              <div className="flex flex-wrap gap-3">
+                <Link href="/admin/edit" className="glass-card px-5 py-3 hover:bg-cinema-accent/20 transition-colors">Edit Reviews</Link>
+                <Link href="/admin/config" className="glass-card px-5 py-3 hover:bg-cinema-accent/20 transition-colors">Site Config</Link>
+              </div>
+            </div>
 
           <form onSubmit={handleSubmit} className="space-y-8">
             <div className="glass-card p-8">
@@ -303,6 +374,7 @@ export default function AdminDashboard() {
           </form>
         </motion.div>
       </div>
-    </div>
+    </main>
+  </>
   );
 }

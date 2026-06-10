@@ -19,6 +19,7 @@ export interface Movie {
   createdAt: string;
   updatedAt: string;
   slug: string;
+  status: 'draft' | 'published' | 'archived';
   watchProviders?: string[];
   awards?: string[];
   boxOffice?: string;

@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Movie } from '@/types/movie';
 
+const PUBLIC_DATA_BASE = process.env.NEXT_PUBLIC_BASE_PATH || '';
+
 export function useMovies() {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [loading, setLoading] = useState(true);
@@ -9,10 +11,10 @@ export function useMovies() {
   useEffect(() => {
     async function fetchMovies() {
       try {
-        const response = await fetch('./data/movies.json');
+        const response = await fetch(`${PUBLIC_DATA_BASE}/data/movies.json`);
         if (!response.ok) throw new Error('Failed to fetch movies');
         const data = await response.json();
-        setMovies(data);
+        setMovies((data as Movie[]).filter((movie) => movie.status === 'published'));
       } catch (err) {
         console.error('Error fetching movie index:', err);
         setError(err instanceof Error ? err.message : 'An error occurred');
@@ -34,7 +36,7 @@ export function useMovie(slug: string) {
   useEffect(() => {
     async function fetchMovie() {
       try {
-        const response = await fetch('./data/movies.json');
+        const response = await fetch(`${PUBLIC_DATA_BASE}/data/movies.json`);
         if (!response.ok) throw new Error('Movie not found');
         const data: Movie[] = await response.json();
         setMovie(data.find((item) => item.slug === slug) ?? null);
