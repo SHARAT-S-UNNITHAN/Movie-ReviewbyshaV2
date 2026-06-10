@@ -84,5 +84,54 @@
     "slug": "uri-the-surgical-strike",
     "createdAt": "2026-06-09T17:52:32.893Z",
     "updatedAt": "2026-06-09T17:52:32.893Z"
+  },
+  {
+    "status": "published",
+    "genre": [
+      "Action",
+      "Thriller"
+    ],
+    "cast": [
+      "Mammootty",
+      "Gautham Vasudev Menon"
+    ],
+    "whatILoved": [
+      "Mammootty's screen presence",
+      "",
+      "Stylish cinematography",
+      "",
+      "Well-executed action sequences",
+      "",
+      "Interesting core concept",
+      "",
+      "Strong technical production"
+    ],
+    "whatIDidntLike": [
+      "Weak screenplay",
+      "",
+      "Predictable narrative",
+      "",
+      "Underused gaming theme",
+      "",
+      "Uneven pacing",
+      "",
+      "Lack of emotional impact"
+    ],
+    "isFeatured": true,
+    "title": "Bazooka",
+    "posterUrl": "https://sharat-s-unnithan.github.io/sharatmoviereviews.io/images/bazooka-poster.jpg",
+    "backdropUrl": "https://sharat-s-unnithan.github.io/sharatmoviereviews.io/images/bazooka-poster.jpg",
+    "releaseDate": "2025-04-10",
+    "director": "Deeno Dennis",
+    "runtime": 154,
+    "rating": 5,
+    "reviewSummary": "Bazooka offers stylish visuals, impressive action sequences, and a commanding performance from Mammootty, but its weak screenplay and underdeveloped gaming concept prevent it from reaching its full potential.",
+    "finalVerdict": "A visually polished action thriller elevated by Mammootty's performance, but held back by an ordinary screenplay and a missed opportunity to fully explore its gaming-based concept.",
+    "fullReview": "Bazooka arrives with an intriguing premise that combines gaming elements, cybercrime, and investigative thriller themes. The film follows Aryan Acharya, a retired forensic expert and ethical hacker, as he joins forces with ACP Benjamin Joshua to solve a series of unusual crimes inspired by video game mechanics.\n\nMammootty once again proves why he remains one of Malayalam cinema's most dependable performers. His screen presence carries much of the film, and he brings charisma and mystery to the character of Aryan Acharya. Gautham Vasudev Menon delivers a restrained performance that complements Mammootty well, although his character deserved stronger writing.\n\nVisually, the film is impressive. Nimish Ravi's cinematography captures Kochi beautifully, and several action sequences are executed with style. The background score adds energy to important moments and helps maintain tension throughout the film.\n\nUnfortunately, the screenplay struggles to match the ambition of the concept. The gaming angle, which was heavily promoted before release, feels underutilized and often becomes little more than a backdrop. The story follows predictable paths, and several twists fail to create the desired impact. Pacing issues also affect the overall experience, particularly during the middle portions.\n\nWhile Bazooka remains watchable due to its performances and technical quality, it never fully capitalizes on its unique premise. The result is a film that feels promising but ultimately average.",
+    "trailerUrl": "https://youtu.be/LkKChCQnjB4?si=4fj4xKvUGppmIAx-",
+    "id": "1781104654691",
+    "slug": "bazooka",
+    "createdAt": "2026-06-10T15:17:34.691Z",
+    "updatedAt": "2026-06-10T15:17:34.691Z"
   }
 ]
