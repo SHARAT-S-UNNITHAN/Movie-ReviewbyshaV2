@@ -11,6 +11,7 @@ import { FilterState } from '@/types/movie';
 import Head from 'next/head';
 import Link from 'next/link';
 import { ArrowUpIcon, FilmIcon, StarIcon, ClockIcon, FireIcon, TrophyIcon } from '@heroicons/react/24/outline';
+import RatingDistribution from '@/components/RatingDistribution';
 
 export default function Home() {
   const { movies, loading } = useMovies();
@@ -81,6 +82,7 @@ export default function Home() {
           </div>
         </div>
       </nav>
+
 
       <main>
         {/* 🎬 Hero Section */}
@@ -192,6 +194,38 @@ export default function Home() {
             </div>
           </section>
         )}
+                {/* 📊 Rating Distribution + Quick Links */}
+        <section className="container mx-auto px-6 py-20 border-t border-white/5">
+          <div className="grid gap-10 lg:grid-cols-2">
+            <RatingDistribution movies={movies} />
+            <div className="space-y-6">
+              <div className="glass-card p-6">
+                <h3 className="font-heading text-xl mb-4 flex items-center gap-2">
+                  <BookmarkIcon className="w-5 h-5 text-cinema-accent" />
+                  Quick Links
+                </h3>
+                <div className="grid grid-cols-2 gap-3">
+                  <Link href="/about" className="glass-card p-4 text-center hover:bg-cinema-accent/20 transition-colors">
+                    <p className="font-semibold">👤 About</p>
+                    <p className="text-xs text-cinema-secondary">The Reviewer</p>
+                  </Link>
+                  <Link href="/admin" className="glass-card p-4 text-center hover:bg-cinema-accent/20 transition-colors">
+                    <p className="font-semibold">✍️ Write Review</p>
+                    <p className="text-xs text-cinema-secondary">Admin Panel</p>
+                  </Link>
+                  <button onClick={() => setFilters({ ...filters, rating: '9' })} className="glass-card p-4 text-center hover:bg-cinema-accent/20 transition-colors">
+                    <p className="font-semibold">⭐ 9+ Rated</p>
+                    <p className="text-xs text-cinema-secondary">Top Tier</p>
+                  </button>
+                  <button onClick={() => setFilters({ ...filters, rating: '' })} className="glass-card p-4 text-center hover:bg-cinema-accent/20 transition-colors">
+                    <p className="font-semibold">🎲 All Movies</p>
+                    <p className="text-xs text-cinema-secondary">Browse All</p>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
       </main>
 
       <AnimatePresence>

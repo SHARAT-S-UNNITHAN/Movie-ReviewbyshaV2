@@ -95,6 +95,15 @@
   }
 }
 
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
 @layer utilities {
   .mask-gradient-bottom {
     mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
@@ -105,3 +114,11 @@
   }
 }
 
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
